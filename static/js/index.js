@@ -29,3 +29,10 @@ function setDate() {
     )
   }
 }
+
+function insertPersonalMessage(message) {
+  $('<div class="message message-personal">' + message + "</div>")
+    .appendTo($(".mCSB_container"))
+    .addClass("new")
+  updateScrollbar()
+}
