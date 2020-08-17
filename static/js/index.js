@@ -36,3 +36,10 @@ function insertPersonalMessage(message) {
     .addClass("new")
   updateScrollbar()
 }
+
+function insertLoadingMessage() {
+  $(
+    '<div class="message loading new"><figure class="avatar"><img src="../static/img/bat.png"/></figure><span></span></div>'
+  ).appendTo($(".mCSB_container"))
+  updateScrollbar()
+}
