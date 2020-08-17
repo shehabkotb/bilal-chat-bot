@@ -82,3 +82,17 @@ function insertKeyboardMessage() {
   insertLoadingMessage()
   sendToServer(message)
 }
+
+function sendToServer(message) {
+  fetch("/chat", {
+    method: "POST",
+
+    body: JSON.stringify({ message: message }),
+
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+    .then((response) => response.json())
+    .then((json) => parseResponse(json))
+}
