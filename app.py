@@ -6,6 +6,20 @@ import re
 from importlib import reload
 import requests
 
+app = Flask(__name__)
+import ipdb
+import riveBot
+from flask import jsonify
+
+global objectUser
+logged_in = False
+
+
+@app.route('/')
+def hello_world():
+    return render_template("login.html")
+
+
 @app.route('/login')
 def login():
     if request.method == 'POST':
