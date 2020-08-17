@@ -12,3 +12,104 @@ $(window).load(function () {
   }, 100)
   speech = speechSynthesis
 })
+
+function updateScrollbar() {
+  $messages.mCustomScrollbar("update").mCustomScrollbar("scrollTo", "bottom", {
+    scrollInertia: 10,
+    timeout: 0
+  })
+}
+
+function setDate() {
+  d = new Date()
+  if (m != d.getMinutes()) {
+    m = d.getMinutes()
+    $('<div class="timestamp">' + d.getHours() + ":" + m + "</div>").appendTo(
+      $(".message:last")
+    )
+  }
+}
+
+function insertPersonalMessage(message) {
+  $('<div class="message message-personal">' + message + "</div>")
+    .appendTo($(".mCSB_container"))
+    .addClass("new")
+  updateScrollbar()
+}
+
+function insertLoadingMessage() {
+  $(
+    '<div class="message loading new"><figure class="avatar"><img src="../static/img/bat.png"/></figure><span></span></div>'
+  ).appendTo($(".mCSB_container"))
+  updateScrollbar()
+}
+
+function insertResponseMessage(response) {
+  $(".message.loading").remove()
+  $(
+    '<div class="message new"><figure class="avatar"><img src="../static/img/bat.png"/></figure>' +
+      response +
+      "</div>"
+  )
+    .appendTo($(".mCSB_container"))
+    .addClass("new")
+  setDate()
+  updateScrollbar()
+}
+
+function insertAudioMessage(audioUrl) {
+  audioElement =
+    '<audio controls autoplay><source src="' +
+    audioUrl +
+    '" type="audio/mp3"></audio>'
+  $(
+    '<div class="message new"><figure class="avatar"><img src="../static/img/bat.png"/></figure>' +
+      audioElement +
+      "</div>"
+  )
+    .appendTo($(".mCSB_container"))
+    .addClass("new")
+  setDate()
+  updateScrollbar()
+}
+
+function insertKeyboardMessage() {
+  message = $(".message-input").val()
+  if ($.trim(message) == "") {
+    return false
+  }
+  insertPersonalMessage(message)
+  insertLoadingMessage()
+  sendToServer(message)
+}
+
+function sendToServer(message) {
+  fetch("/chat", {
+    method: "POST",
+
+    body: JSON.stringify({ message: message }),
+
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+    .then((response) => response.json())
+    .then((json) => parseResponse(json))
+}
+
+function parseResponse(json) {
+  if (json["action"] === undefined) {
+    insertResponseMessage("something went wrong bot did not reply")
+  } else if (json["action"] === "display") {
+    insertResponseMessage(json["message"])
+
+    // text to speech
+    let voice = speech.getVoices()[5]
+    let utterance = new SpeechSynthesisUtterance(json["message"])
+    utterance.voice = voice
+    speech.speak(utterance)
+  } else if (json["action"] === "play") {
+    insertResponseMessage(json["message"])
+    insertAudioMessage(json["audio"])
+  }
+}
