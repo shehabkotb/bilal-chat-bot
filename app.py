@@ -47,7 +47,35 @@ def login():
         response['response'] = "Method not allowed"
 
         return jsonify(response), 400
-    
+
 @app.route('/register')
 def register():
     return render_template('register.html')
+
+
+
+@app.route('/registration', methods=['POST'])
+def registration():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form["password"]
+        conn = databaseFunctions.db_connect()
+        user = databaseFunctions.check_user(conn, username)
+        response = {}
+        if user:
+            response["status"] = "Failed"
+            response['response'] = "user with same name exists please try a new username"
+            return redirect(url_for('register'))
+        else:
+            databaseFunctions.add_user(conn, request.form)
+            response["status"] = "Success"
+            response['response'] = "registered correctly you can now login"
+            return redirect(url_for('login'))
+    else:
+        response = {}
+        response["status"] = "Failed"
+        response['response'] = "Method not allowed"
+
+        return jsonify(response), 400
+
+
