@@ -113,3 +113,15 @@ function parseResponse(json) {
     insertAudioMessage(json["audio"])
   }
 }
+
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+var recognition = new SpeechRecognition()
+recognition.lang = "en-US"
+recognition.interimResults = false
+
+$(".message-record").click(function () {
+  if (!$(".message-record").hasClass("Rec")) {
+    $(".message-record").addClass("Rec")
+    recognition.start()
+  }
+})
