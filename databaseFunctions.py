@@ -26,3 +26,13 @@ def add_user(conn, user_data):
     cur.execute(sql, user_data)
     return cur.lastrowid
 
+def get_user(conn, username,password):
+    sql = ' SELECT * from `user` WHERE username = "{}" and password = "{}"'.format(username, password)
+    cur = conn.cursor()
+    record = cur.execute(sql)
+    user = record.fetchone()
+    if user is None:
+        return False
+    else:
+        return user
+
