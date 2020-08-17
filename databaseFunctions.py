@@ -36,3 +36,12 @@ def get_user(conn, username,password):
     else:
         return user
 
+def check_user(conn, username):
+    sql = ' SELECT * from `user` WHERE username = "{}" '.format(username)
+    cur = conn.cursor()
+    record = cur.execute(sql)
+    user = record.fetchone()
+    if user is None:
+        return False
+    else:
+        return user
