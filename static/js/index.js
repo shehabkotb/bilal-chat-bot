@@ -43,3 +43,42 @@ function insertLoadingMessage() {
   ).appendTo($(".mCSB_container"))
   updateScrollbar()
 }
+
+function insertResponseMessage(response) {
+  $(".message.loading").remove()
+  $(
+    '<div class="message new"><figure class="avatar"><img src="../static/img/bat.png"/></figure>' +
+      response +
+      "</div>"
+  )
+    .appendTo($(".mCSB_container"))
+    .addClass("new")
+  setDate()
+  updateScrollbar()
+}
+
+function insertAudioMessage(audioUrl) {
+  audioElement =
+    '<audio controls autoplay><source src="' +
+    audioUrl +
+    '" type="audio/mp3"></audio>'
+  $(
+    '<div class="message new"><figure class="avatar"><img src="../static/img/bat.png"/></figure>' +
+      audioElement +
+      "</div>"
+  )
+    .appendTo($(".mCSB_container"))
+    .addClass("new")
+  setDate()
+  updateScrollbar()
+}
+
+function insertKeyboardMessage() {
+  message = $(".message-input").val()
+  if ($.trim(message) == "") {
+    return false
+  }
+  insertPersonalMessage(message)
+  insertLoadingMessage()
+  sendToServer(message)
+}
