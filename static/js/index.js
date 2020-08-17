@@ -96,3 +96,20 @@ function sendToServer(message) {
     .then((response) => response.json())
     .then((json) => parseResponse(json))
 }
+
+function parseResponse(json) {
+  if (json["action"] === undefined) {
+    insertResponseMessage("something went wrong bot did not reply")
+  } else if (json["action"] === "display") {
+    insertResponseMessage(json["message"])
+
+    // text to speech
+    let voice = speech.getVoices()[5]
+    let utterance = new SpeechSynthesisUtterance(json["message"])
+    utterance.voice = voice
+    speech.speak(utterance)
+  } else if (json["action"] === "play") {
+    insertResponseMessage(json["message"])
+    insertAudioMessage(json["audio"])
+  }
+}
