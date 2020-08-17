@@ -78,4 +78,20 @@ def registration():
 
         return jsonify(response), 400
 
+@app.route('/chat', methods=['POST'])
+def chat():
+    if request.method == 'POST':
+
+        json_data = request.get_json()
+
+        state, reply = riveBot.chat('1', json_data['message'])
+        if state == 0:
+            return json.loads(r'' + reply)
+        else:
+            return jsonify({'message': 'something went wrong bot did not reply'})
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
