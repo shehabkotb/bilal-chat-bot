@@ -47,3 +47,7 @@ def login():
         response['response'] = "Method not allowed"
 
         return jsonify(response), 400
+    
+@app.route('/register')
+def register():
+    return render_template('register.html')
