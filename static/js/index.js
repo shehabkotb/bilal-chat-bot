@@ -113,3 +113,36 @@ function parseResponse(json) {
     insertAudioMessage(json["audio"])
   }
 }
+
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+var recognition = new SpeechRecognition()
+recognition.lang = "en-US"
+recognition.interimResults = false
+
+$(".message-record").click(function () {
+  if (!$(".message-record").hasClass("Rec")) {
+    $(".message-record").addClass("Rec")
+    recognition.start()
+  }
+})
+
+recognition.onresult = function (event) {
+  var speechResult = event.results[0][0].transcript.toLowerCase()
+  $(".message-record").removeClass("Rec")
+  insertPersonalMessage(speechResult)
+  insertLoadingMessage()
+  sendToServer(speechResult)
+}
+
+$(".message-submit").click(function () {
+  insertKeyboardMessage()
+  $(".message-input").val(null)
+})
+
+$(window).on("keydown", function (e) {
+  if (e.which == 13) {
+    insertKeyboardMessage()
+    $(".message-input").val(null)
+    return false
+  }
+})
