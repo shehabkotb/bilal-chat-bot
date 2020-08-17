@@ -12,3 +12,10 @@ $(window).load(function () {
   }, 100)
   speech = speechSynthesis
 })
+
+function updateScrollbar() {
+  $messages.mCustomScrollbar("update").mCustomScrollbar("scrollTo", "bottom", {
+    scrollInertia: 10,
+    timeout: 0
+  })
+}
