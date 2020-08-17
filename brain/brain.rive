@@ -1,0 +1,42 @@
+! version = 2.0
+
+> begin
+
++ request
+* <get met> == undefined => <set met=true>{topic=welcome}{ok}
+- {ok}
+< begin
+
+
+> topic welcome
++ *
+- {"message" : "hello i am bilal bot. You can ask me to play or explain quran, or ask questions about islam.", "action" : "display"}{topic=start}
+< topic
+
+
+> topic start
++ play surah * verse *
+- {"message" : "playing surah <star1> verse <star2>", "audio" : "<call>getVerse <star1> <star2> </call>" , "action": "play"}
++ explain surah * verse *
+- {"message" : "<call>getTafseer <star1> <star2> </call>", "action": "display"}
++ play surah *
+- {"message" : "playing surah <star1>", "audio" : "<call>getSurah <star1></call>" , "action": "play"}
++ *
+- {"message" : "i don't know how to reply to that", "action": "display"}
+< topic
+
+
+> object getSurah python
+    from utilities import getSurah
+    return getSurah(args)
+< object
+
+> object getVerse python
+    from utilities import getVerse
+    return getVerse(args)
+< object
+
+> object getTafseer python
+    from utilities import getTafseer
+    return getTafseer(args)
+< object
