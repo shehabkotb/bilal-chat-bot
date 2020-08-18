@@ -1,16 +1,22 @@
-import json
-from flask import Flask, request, render_template, session, flash, url_for, redirect
+from flask import (
+    Flask,
+    request,
+    render_template,
+    session,
+    flash,
+    url_for,
+    redirect,
+    jsonify,
+)
 
-# import jsonify
+import json
 import databaseFunctions
 import re
-from importlib import reload
 import requests
+import riveBot
 
 app = Flask(__name__)
-import ipdb
-import riveBot
-from flask import jsonify
+
 
 global objectUser
 logged_in = False
