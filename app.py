@@ -24,7 +24,7 @@ logged_in = False
 
 @app.route("/")
 def hello_world():
-    return render_template("login.html")
+    return render_template("index.html")
 
 
 @app.route("/login")

@@ -393,6 +393,13 @@ form {
   z-index: 3;
 }
 
+button .btn-sm .btn-primary {
+  display: block;
+  position: absolute;
+  top: 5px;
+  right: 20px;
+}
+
 /*--------------------
 Custom Srollbar
 --------------------*/
