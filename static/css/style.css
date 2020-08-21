@@ -325,7 +325,7 @@ Message Box
 .message-box .message-submit {
   position: absolute;
   z-index: 1;
-  top: 9px;
+  top: 11px;
   right: 10px;
   color: #fff;
   border: none;

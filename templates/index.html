@@ -24,8 +24,14 @@
         <img src="../static/img/bat.png" />
       </figure>
       <div>
-        <button class="btn-sm btn-dark" style="display: block;position: absolute;top: 5px;right: 20px;"
+        <!-- <button class="btn-sm btn-dark" style="display: block;position: absolute;top: 5px;right: 85px;"
                 data-toggle="modal" data-target="#extraLargeModal"> Settings </button>
+        <button id='logout' class="btn btn-info btn-sm"
+                style="display: block;position: absolute;top: 5px;right: 12px;">Logout</button> -->
+        <button class="btn btn-sm btn-dark" style="display: block;position: absolute;top: 5px;right: 85px;"
+                data-toggle="modal" data-target="#extraLargeModal"> Settings </button>
+        <a href="logout" class="btn btn-info btn-sm"
+           style="display: block;position: absolute;top: 5px;text-transform: none;right: 12px;">Logout</a>
       </div>
     </div>
     <div class="messages">
@@ -45,15 +51,15 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
         </div>
         <div class="modal-body">
-          <form>
+          <form id="settings-form">
             <div class="row">
               <div class="form-group col-lg-6">
                 <label for="inputState">Reciter</label>
                 <select id="inputState" class="form-control">
-                  <option selected>مشاري بن راشد العفاسي</option>
-                  <option>سعد الغامدي</option>
-                  <option>عبدالرحمن السديس</option>
-                  <option>أحمد بن علي العجمي</option>
+                  <option value="afs" selected>مشاري بن راشد العفاسي</option>
+                  <option value="s_gmd">سعد الغامدي</option>
+                  <option value="sds">عبدالرحمن السديس</option>
+                  <option value="ajm">أحمد بن علي العجمي</option>
                   <!-- عبدالرحمن السديس sds- أحمد بن علي العجمي ajm - سعد الغامدي s_gmd - مشاري بن راشد العفاسي afs  -->
                 </select>
               </div>
@@ -61,7 +67,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cancel </button>
-          <button id="settings-modal-btn" type="submit" class="btn btn-primary">OK</button>
+          <button id="settings-form-button" type="submit" class="btn btn-primary">OK</button>
         </div>
         </form>
       </div>

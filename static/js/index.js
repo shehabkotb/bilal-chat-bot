@@ -7,9 +7,6 @@ i = 0
 
 $(window).load(function () {
   $messages.mCustomScrollbar()
-  setTimeout(function () {
-    insertResponseMessage("hello i am bilal bot")
-  }, 100)
   speech = speechSynthesis
 })
 
@@ -133,6 +130,13 @@ recognition.onresult = function (event) {
   insertLoadingMessage()
   sendToServer(speechResult)
 }
+
+$("#settings-form").on("submit", function (e) {
+  e.preventDefault()
+
+  $("#extraLargeModal").modal("hide")
+  console.log(e.target.elements[0].value)
+})
 
 $(".message-submit").click(function () {
   insertKeyboardMessage()

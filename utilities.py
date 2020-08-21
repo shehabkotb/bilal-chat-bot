@@ -2,12 +2,12 @@ from flask import jsonify, send_file
 from app import app
 import requests
 import ipdb
-from flask import Response
+from flask import Response, g
 
 
 def getSurah(args):
     surahNumber = args[0]
-    reader = "afs"
+    reader = g.user["surah_reciter"]  # "afs"
     result = (
         "http://server8.mp3quran.net/"
         + reader
@@ -23,7 +23,7 @@ def getVerse(args):
 
     surahNumber = args[0]
     verseNumber = args[1]
-    reader = "ar.alafasy"
+    reader = g.user["verse_reciter"]  # "ar.alafasy"
     request_url = "http://api.alquran.cloud/v1/surah/" + surahNumber + "/" + reader
     resultJSON = requests.get(request_url).json()
     # ipdb.set_trace()
