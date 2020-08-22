@@ -5,7 +5,7 @@ var $messages = $(".messages-content"),
   speech
 i = 0
 
-$(window).load(function () {
+$(window).on("load", function () {
   $messages.mCustomScrollbar()
   speech = speechSynthesis
 })
@@ -134,8 +134,17 @@ recognition.onresult = function (event) {
 $("#settings-form").on("submit", function (e) {
   e.preventDefault()
 
+  const result = e.target.elements[0].value.split(",")
+
   $("#extraLargeModal").modal("hide")
-  console.log(e.target.elements[0].value)
+
+  fetch("/settings", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ surah_reciter: result[0], verse_reciter: result[1] })
+  }).catch((e) => window.alert(e))
 })
 
 $(".message-submit").click(function () {

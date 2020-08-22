@@ -17,7 +17,6 @@ from db import get_db
 import db
 import functools
 import json
-import databaseFunctions
 import re
 import requests
 import riveBot
@@ -142,13 +141,24 @@ def chat():
 
 @app.route("/settings", methods=["POST"])
 def settings():
+
     if request.method == "POST":
         user_id = session.get("user_id")
 
         if user_id == None:
             return "unauthorized", 401
 
-        return
+        surah_reciter = request.json["surah_reciter"]
+        verse_reciter = request.json["verse_reciter"]
+
+        db = get_db()
+        db.execute(
+            "UPDATE user SET surah_reciter = ?, verse_reciter = ? WHERE id = ?",
+            (surah_reciter, verse_reciter, user_id),
+        )
+        db.commit()
+
+        return "updated", 200
 
 
 if __name__ == "__main__":

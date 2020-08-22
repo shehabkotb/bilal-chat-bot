@@ -7,10 +7,10 @@ from flask import Response, g
 
 def getSurah(args):
     surahNumber = args[0]
-    reader = g.user["surah_reciter"]  # "afs"
+    reciter = g.user["surah_reciter"]  # "afs"
     result = (
         "http://server8.mp3quran.net/"
-        + reader
+        + reciter
         + "/"
         + str(surahNumber).zfill(3)
         + "."
@@ -23,8 +23,8 @@ def getVerse(args):
 
     surahNumber = args[0]
     verseNumber = args[1]
-    reader = g.user["verse_reciter"]  # "ar.alafasy"
-    request_url = "http://api.alquran.cloud/v1/surah/" + surahNumber + "/" + reader
+    reciter = g.user["verse_reciter"]  # "ar.alafasy"
+    request_url = "http://api.alquran.cloud/v1/surah/" + surahNumber + "/" + reciter
     resultJSON = requests.get(request_url).json()
     # ipdb.set_trace()
     return resultJSON["data"]["ayahs"][int(verseNumber) - 1]["audio"]
