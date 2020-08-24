@@ -16,14 +16,50 @@
 
 > topic start
 + play surah * verse *
-- {"message" : "playing surah <star1> verse <star2>", "audio" : "<call>getVerse <star1> <star2> </call>" , "action": "play"}
-+ explain surah * verse *
-- {"message" : "<call>getTafseer <star1> <star2> </call>", "action": "display"}
+- <call>getVerse <star1> <star2> </call>
 + play surah *
-- {"message" : "playing surah <star1>", "audio" : "<call>getSurah <star1></call>" , "action": "play"}
+- <call>getSurah <star1></call>
++ explain surah #
+- <set surahNumber=<star1>>{"message" : "which verse?", "action": "display"}{topic=tafseer}
++ i want to ask about islam
+- {"message" : "what do you want to know? \s
+^ 1) islam beliefs? \s
+^ 2) islam pillars?", "action": "display"}{topic=islam}
++ play radio
+- <call>getRadio</call>
 + *
 - {"message" : "i don't know how to reply to that", "action": "display"}
 < topic
+
+> topic tafseer
++ #
+- <call>getTafseer <get surahNumber> <star1> </call>
++ verse *
+- <call>getTafseer <get surahNumber> <star1> </call>
++ *
+- {topic=start}<@>
+< topic
+
+> topic islam
++ (1|[islam] belief|[islam] beliefs)
+- {"message" : "The six major beliefs in Islam, as understood by the majority of Sunni Muslims, are: <br/>
+^ belief in God; <br/>
+^ belief in angels; <br/>
+^ belief in God’s prophets/messengers; <br/>
+^ belief in God’s revelations in the form of holy scriptures given to the messengers; <br/>
+^ belief in an afterlife that follows the Day of Judgment on which people will be held accountable for their actions and compensated accordingly in the afterlife; and <br/>
+^ belief in God’s divine will and His knowledge of what happens in the world.", "action": "display-no-audio"} {topic=start}
++ (2|[islam] pillar|[islam] pillars)
+- {"message" : "Muslims practice their faith in many different ways, but the major practices for both Sunni and Shi’a Muslims are known as the Five Pillars, which include: <br/>
+^ the profession of faith, namely that there is only one God and that Muhammad is the Messenger of God; <br/>
+^ the five daily prayers; <br/>
+^ required annual donation to charity in the amount of 2.5% of one’s excess wealth; <br/>
+^ fasting during daylight hours in the month of Ramadan; and <br/>
+^ making a pilgrimage to Mecca once in a lifetime, if one is mentally, physically, and financially able to do so.", "action": "display-no-audio"} {topic=start}
++ *
+- {"message" : "i don't know the answer to that question.", "action": "display"}
+< topic
+
 
 
 > object getSurah python
@@ -39,4 +75,9 @@
 > object getTafseer python
     from utilities import getTafseer
     return getTafseer(args)
+< object
+
+> object getRadio python
+    from utilities import getRadio
+    return getRadio()
 < object

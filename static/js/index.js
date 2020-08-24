@@ -105,6 +105,8 @@ function parseResponse(json) {
     let utterance = new SpeechSynthesisUtterance(json["message"])
     utterance.voice = voice
     speech.speak(utterance)
+  } else if (json["action"] === "display-no-audio") {
+    insertResponseMessage(json["message"])
   } else if (json["action"] === "play") {
     insertResponseMessage(json["message"])
     insertAudioMessage(json["audio"])
@@ -120,6 +122,12 @@ $(".message-record").click(function () {
   if (!$(".message-record").hasClass("Rec")) {
     $(".message-record").addClass("Rec")
     recognition.start()
+    return
+  }
+  if ($(".message-record").hasClass("Rec")) {
+    $(".message-record").removeClass("Rec")
+    recognition.abort()
+    return
   }
 })
 

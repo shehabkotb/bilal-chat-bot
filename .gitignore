@@ -9,3 +9,8 @@ __pycache__
 config.py
 
 /requests
+
+# favicon.ico
+static/favicon.ico
+favicon_io/
+favicon.ico

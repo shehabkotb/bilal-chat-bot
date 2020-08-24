@@ -133,8 +133,9 @@ def chat():
         json_data = request.get_json()
 
         state, reply = riveBot.chat(g.user["id"], json_data["message"])
+        # ipdb.set_trace()
         if state == 0:
-            return json.loads(r"" + reply)
+            return eval(reply.encode("unicode_escape"))
         else:
             return jsonify({"message": "something went wrong bot did not reply"})
 
@@ -162,5 +163,5 @@ def settings():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
