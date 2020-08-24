@@ -5,7 +5,7 @@ from flask import Response, g
 
 
 def getSurah(args):
-i
+
     surahNumber = args[0]
 
     if not surahNumber.isnumeric():
