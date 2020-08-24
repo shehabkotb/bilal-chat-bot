@@ -18,7 +18,6 @@ import db
 import functools
 import json
 import re
-import requests
 import riveBot
 import ipdb
 
