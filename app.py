@@ -19,7 +19,6 @@ import functools
 import json
 import re
 import riveBot
-import ipdb
 
 
 app = Flask(__name__)

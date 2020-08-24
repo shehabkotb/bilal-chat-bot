@@ -5,11 +5,7 @@ from flask import Response, g
 
 
 def getSurah(args):
-
-    import ipdb
-
-    ipdb.set_trace()
-
+i
     surahNumber = args[0]
 
     if not surahNumber.isnumeric():
